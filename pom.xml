@@ -4,31 +4,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.example</groupId>
+  <groupId>Fallout</groupId>
   <artifactId>Proyecto_POO</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Proyecto_POO</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit.version>5.9.2</junit.version>      </properties>
+<junit.version>5.9.2</junit.version>  </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>20</version>
+      <version>20.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>20</version>
+      <version>20.0.1</version>
     </dependency>
-        <dependency>
+<dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-media</artifactId>
-      <version>20</version>
-    </dependency>                            <dependency>
+      <version>20.0.1</version>
+    </dependency><dependency>
       <groupId>com.github.almasb</groupId>
       <artifactId>fxgl</artifactId>
       <version>17.2</version>
@@ -39,7 +39,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
+<dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -50,11 +50,11 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>              </dependencies>
+    </dependency>  </dependencies>
 
   <build>
-        <plugins>
-            <plugin>
+    <plugins>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
@@ -62,7 +62,7 @@
           <source>20</source>
           <target>20</target>
         </configuration>
-            </plugin>
+      </plugin>
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -72,7 +72,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.proyecto_poo/com.example.proyecto_poo.FalloutTDApplication</mainClass>
+              <mainClass>fallout.proyecto_poo/fallout.proyecto_poo.HelloApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
@@ -83,6 +83,6 @@
           </execution>
         </executions>
       </plugin>
-          </plugins>
+    </plugins>
   </build>
 </project>
