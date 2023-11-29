@@ -3,8 +3,6 @@ package fallout.proyecto_poo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.GameWorld;
-import com.almasb.fxgl.entity.level.Level;
 
 public class FalloutTDApplication extends GameApplication {
     @Override
@@ -18,9 +16,6 @@ public class FalloutTDApplication extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new FalloutFactory());
         FXGL.setLevelFromMap("fallout.tmx");
-
-
-
     }
 
     public static void main(String[] args) {

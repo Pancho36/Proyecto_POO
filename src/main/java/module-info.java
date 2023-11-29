@@ -4,6 +4,7 @@ module fallout.proyecto_poo {
 
     requires com.almasb.fxgl.all;
     opens assets.levels;
+    opens assets.textures;
 
     opens fallout.proyecto_poo to javafx.fxml;
     exports fallout.proyecto_poo;

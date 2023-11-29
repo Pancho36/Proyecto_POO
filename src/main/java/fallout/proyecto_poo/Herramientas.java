@@ -2,7 +2,7 @@ package fallout.proyecto_poo;
 
 public class Herramientas {
 
-	private int tipoErramienta;
+	private int tipoHerramienta;
 
 	public void UsarAunmentoVelocidadConstruccion() {
 		// TODO - implement Erramientas.UsarAunmentoVelocidadConstruccion
