@@ -9,6 +9,7 @@ import fallout.proyecto_poo.EntityType;
 import fallout.proyecto_poo.FalloutTDApplication;
 import fallout.proyecto_poo.data.EnemyData;
 import fallout.proyecto_poo.data.TurretData;
+import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
 public class BulletComponent extends Component {
@@ -42,8 +43,9 @@ public class BulletComponent extends Component {
     }
 
     private static void showExplosion(Entity enemy, TurretComponent turretComponent) {
+        Point2D offSet = new Point2D(60,90);
         FXGL.spawn("Explosion"
-                ,new SpawnData(enemy.getPosition().add(-10,-10))
+                ,new SpawnData(enemy.getPosition().subtract(offSet))
                         .put("imageRoute", turretComponent.getExplosionRoute())
                 );
     }

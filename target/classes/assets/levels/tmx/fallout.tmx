@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="50">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="57">
  <tileset firstgid="1" name="buildings-removebg-preview" tilewidth="32" tileheight="32" tilecount="220" columns="20">
   <image source="buildings-removebg-preview.png" width="669" height="373"/>
  </tileset>
@@ -78,6 +78,9 @@
  <objectgroup id="12" name="way">
   <object id="49" name="way1" type="WayPoint" x="831.988" y="639.167">
    <polyline points="-26,1 -28,-72.0102 -193.929,-254.581 -674.06,-257.361 -675.952,-360.881 -543.542,-507.931 -62.6003,-508.821 -63.0296,-591.962 -61.0295,-638.382"/>
+  </object>
+  <object id="56" name="route" type="Route" x="894.667" y="642.667">
+   <polygon points="0,0 -1.33333,-165.333 -193.333,-353.333 -576,-352 -577.333,-417.333 -1.33333,-418.667 -1.33333,-637.333 -189.333,-641.333 -242.667,-581.333 -669.333,-578.667 -833.333,-418.667 -830.667,-193.333 -320,-192 -162.667,-32 -164,4"/>
   </object>
  </objectgroup>
 </map>

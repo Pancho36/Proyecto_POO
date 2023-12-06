@@ -40,16 +40,16 @@ public class TurretComponent extends Component {
 
             FXGL.getGameWorld().getClosestEntity(entity,e ->e.isType(EntityType.ENEMY))
                     .ifPresent(closestEnemy -> {
-                        entity.rotateToVector(closestEnemy.getPosition().subtract(entity.getPosition()));
-                        entity.rotateBy(90);
+                        // entity.rotateToVector(closestEnemy.getPosition().subtract(entity.getPosition()));
+
                         shoot(closestEnemy);
                         shootDelay.capture();
                     });
         }
     }
     private void shoot(Entity enemy){
-        Point2D turretPosition = getEntity().getPosition();
-        Point2D enemyPosition = enemy.getPosition().subtract(turretPosition);
+        Point2D offSet = new Point2D(-20,-40);
+        Point2D turretPosition = getEntity().getPosition().subtract(offSet);
         String imageProjectileRoute = Objects.requireNonNull(data.projectileImageRoute());
 
         var bullet = FXGL.spawn("Bullet",

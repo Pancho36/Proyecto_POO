@@ -33,8 +33,16 @@ public class FalloutFactory implements EntityFactory {
         TurretData turretData = data.get("turretData");
         return FXGL.entityBuilder(data)
                 .viewWithBBox(turretData.imageRoute())
+                .collidable()
                 .with(new TurretComponent(turretData))
                 .type(EntityType.TURRET)
+                .build();
+    }
+    @Spawns("Route")
+    public Entity route(SpawnData data){
+        return FXGL.entityBuilder(data)
+                .type(EntityType.ROUTE)
+                .collidable()
                 .build();
     }
     @Spawns("Bullet")
@@ -57,9 +65,8 @@ public class FalloutFactory implements EntityFactory {
     public Entity newEnemy (SpawnData data) {
         EnemyData enemyData = data.get("enemyData");
         ImageView view = FXGL.texture(enemyData.imageRoute());
-        view.setX(2);
-        view.setY(2);
-
+        view.setFitHeight(80);
+        view.setFitWidth(80);
 
         return FXGL.entityBuilder(data)
                 .type(EntityType.ENEMY)

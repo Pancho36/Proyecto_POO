@@ -7,11 +7,12 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import fallout.proyecto_poo.data.*;
+import fallout.proyecto_poo.ui.HP;
+import fallout.proyecto_poo.ui.StartRoundTimer;
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Polyline;
@@ -19,34 +20,27 @@ import javafx.util.Duration;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.geti;
 
 public class FalloutTDApplication extends GameApplication {
     private List<WaveData> wavesData;
+    private StartRoundTimer startRoundTimer;
     /* TODO:
-     * 1. barra de vida
-     * 2. timer de la partida
      * 3. torreta no se pueda colocar en el camino
      * 4. torreta no se pueda colocar en otra torreta
      * 5. torreta no se pueda colocar en el spawn
      * 6. torreta no se pueda colocar en el final
-     * 7. Animaciones
-     * 8. Instrucciones de juego
-     * 9. Sonidos
-     * 10. Oleadas (Mezclas enemigos, agregar enemigos)
      * 11. Limitar cantidad de torretas
-     * 12. Mejorar torretas (daño, velocidad de disparo, rango) con click derecho
      * 13. Oro
-     * 14. Vida del jugador
+     * 14. Nivel de dificultad
      */
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setTitle("Fallout Tower Defense");
-        gameSettings.setVersion("0.0");
+        gameSettings.setVersion("0.4");
         gameSettings.setWidth(30 * 32);
         gameSettings.setHeight(20 * 32);
         gameSettings.setMainMenuEnabled(true);
@@ -58,6 +52,7 @@ public class FalloutTDApplication extends GameApplication {
         vars.put("currentWave", 0);
         vars.put("playerHp", Config.PLAYER_HP);
         vars.put("numOfWaves", 0);
+        vars.put("startRoundTimer", Config.TIME_TO_START);
     }
 
     @Override
@@ -65,7 +60,7 @@ public class FalloutTDApplication extends GameApplication {
         initMapAndFactory();
         initVarListeners();
         initWaveList();
-
+        startRoundTimer = new StartRoundTimer();
         loadCurrentLevel();
     }
 
@@ -91,9 +86,15 @@ public class FalloutTDApplication extends GameApplication {
     private void scheduleNextWave() {
         FXGL.set("numOfWaves", wavesData.get(geti("currentWave")).waves());
         FXGL.set("numOfEnemies",wavesData.get(geti("currentWave")).numOfEnemies());
+
+
+        FXGL.run(()->{
+            inc("startRoundTimer",-1);
+        },Duration.seconds(1),Config.TIME_TO_START);
+
         FXGL.getGameTimer().runAtInterval(() -> {
             spawnEnemies(wavesData.get(geti("currentWave")));
-        }, Duration.seconds(5), wavesData.get(geti("currentWave")).waves()
+        }, Duration.seconds(Config.TIME_TO_START), wavesData.get(geti("currentWave")).waves()
         );
     }
 
@@ -106,6 +107,12 @@ public class FalloutTDApplication extends GameApplication {
     }
 
     @Override
+    protected void initUI() {
+        FXGL.addUINode(new HP(),5,5);
+        FXGL.addUINode(startRoundTimer,380,280);
+    }
+
+    @Override
     protected void onUpdate(double tpf) {
         // TODO: contar cuantos enemigos quedan pero con una variable unica "EnemiesKilled", cuando llegue a 0 que llame a una funcion que cree enemigos, pero que no sea la inicial
         if(geti("numOfEnemies") == 0){
@@ -114,6 +121,9 @@ public class FalloutTDApplication extends GameApplication {
         }
         if(geti("playerHp") == 0){
             playerKilled();
+        }
+        if(geti("startRoundTimer") == 0){
+            startRoundTimer.setVisible(false);
         }
     }
 
@@ -137,7 +147,7 @@ public class FalloutTDApplication extends GameApplication {
         FXGL.onBtnDown(MouseButton.PRIMARY,()->{
             Point2D mousePosition = FXGL.getInput().getMousePositionWorld();
             FXGL.spawn ("SimpleTurret",
-                    new SpawnData(mousePosition.subtract(new Point2D(40,40)))
+                    new SpawnData(mousePosition.subtract(new Point2D(50,50)))
                             .put("turretData",
                                     FXGL.getAssetLoader()
                                             .loadJSON("json/turrets/simpleTurret.json",TurretData.class).get()));
