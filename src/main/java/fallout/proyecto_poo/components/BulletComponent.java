@@ -6,6 +6,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import fallout.proyecto_poo.EntityType;
+import fallout.proyecto_poo.FalloutTDApplication;
 import fallout.proyecto_poo.data.EnemyData;
 import fallout.proyecto_poo.data.TurretData;
 import javafx.util.Duration;
@@ -32,6 +33,7 @@ public class BulletComponent extends Component {
                 showExplosion(enemy, turretComponent);
             });
             if(hp.isZero()){
+                FXGL.<FalloutTDApplication>getAppCast().onEnemyKilled(target);
                 target.removeFromWorld();
             }
         }else {

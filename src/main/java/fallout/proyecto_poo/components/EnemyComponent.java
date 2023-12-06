@@ -3,6 +3,7 @@ package fallout.proyecto_poo.components;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.component.Component;
+import fallout.proyecto_poo.FalloutTDApplication;
 import fallout.proyecto_poo.data.EnemyData;
 import fallout.proyecto_poo.data.Way;
 import javafx.geometry.Point2D;
@@ -44,6 +45,7 @@ public class EnemyComponent extends Component {
             }else {
                 // TODO: Agregar cuando enemigo llegue al final
                 entity.removeFromWorld();
+                FXGL.<FalloutTDApplication>getAppCast().onEnemyReachedEnd(entity);
             }
         }
     }

@@ -4,6 +4,7 @@ import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import fallout.proyecto_poo.data.*;
 import javafx.beans.binding.BooleanBinding;
@@ -75,6 +76,13 @@ public class FalloutTDApplication extends GameApplication {
             }
         });
     }
+    public void onEnemyKilled(Entity enemy) {
+        inc("numOfEnemies", -1);
+    }
+    public void onEnemyReachedEnd(Entity enemy) {
+        inc("playerHp", -1);
+        inc("numOfEnemies", -1);
+    }
     private void loadCurrentLevel() {
         FXGL.set("currentWave", 0);
         scheduleNextWave();
@@ -83,12 +91,10 @@ public class FalloutTDApplication extends GameApplication {
     private void scheduleNextWave() {
         FXGL.set("numOfWaves", wavesData.get(geti("currentWave")).waves());
         FXGL.set("numOfEnemies",wavesData.get(geti("currentWave")).numOfEnemies());
-        if (geti("currentWave") < geti("numOfWaves")) {
-            inc("currentWave", 1);
-            for (int i = 0; i < geti("numOfEnemies") ; i++) {
-                spawnEnemies(wavesData.get(geti("currentWave")));
-            }
-        }
+        FXGL.getGameTimer().runAtInterval(() -> {
+            spawnEnemies(wavesData.get(geti("currentWave")));
+        }, Duration.seconds(5), wavesData.get(geti("currentWave")).waves()
+        );
     }
 
     private void onWaveEnd() {
@@ -102,6 +108,13 @@ public class FalloutTDApplication extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         // TODO: contar cuantos enemigos quedan pero con una variable unica "EnemiesKilled", cuando llegue a 0 que llame a una funcion que cree enemigos, pero que no sea la inicial
+        if(geti("numOfEnemies") == 0){
+            inc("currentWave", 1);
+            scheduleNextWave();
+        }
+        if(geti("playerHp") == 0){
+            playerKilled();
+        }
     }
 
     private static void spawnEnemies(WaveData waveData) {
@@ -141,6 +154,9 @@ public class FalloutTDApplication extends GameApplication {
     private static void initMapAndFactory() {
         FXGL.getGameWorld().addEntityFactory(new FalloutFactory());
         FXGL.setLevelFromMap("tmx/fallout.tmx");
+    }
+    private void playerKilled() {
+        showMessage("Defeat", getGameController()::gotoMainMenu);
     }
     private void gameOver() {
         showMessage("Level Complete", getGameController()::gotoMainMenu);
