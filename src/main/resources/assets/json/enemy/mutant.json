@@ -1,0 +1,7 @@
+{
+  "hp": 300,
+  "recompense" : 150,
+  "moveSpeed": 1.0,
+  "delay" : 3,
+  "imageRoute": "enemy/mutant.png"
+}

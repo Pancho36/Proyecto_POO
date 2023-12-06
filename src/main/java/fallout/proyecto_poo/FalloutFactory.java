@@ -16,6 +16,7 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import fallout.proyecto_poo.components.BulletComponent;
 import fallout.proyecto_poo.components.EnemyComponent;
+import fallout.proyecto_poo.components.EnemyHpViewComponent;
 import fallout.proyecto_poo.components.TurretComponent;
 import fallout.proyecto_poo.data.EnemyData;
 import fallout.proyecto_poo.data.TurretData;
@@ -65,6 +66,7 @@ public class FalloutFactory implements EntityFactory {
                 .viewWithBBox(view)
                 .collidable()
                 .with(new HealthIntComponent(enemyData.hp()))
+                .with(new EnemyHpViewComponent())
                 .with( new AutoRotationComponent())
                 .with(new EnemyComponent(data.get("way"),enemyData))
                 .build();

@@ -1,0 +1,7 @@
+{
+  "name": "simpleTurret",
+  "imageRoute": "turrets/turret.png",
+  "projectileImageRoute": "bullets/projectile.png",
+  "explosionImageRoute":"bullets/explosion.png",
+  "damage": 10
+}

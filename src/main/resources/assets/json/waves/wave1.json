@@ -1,0 +1,5 @@
+{
+   "numOfEnemies": 10,
+   "waves": 2,
+   "enemyJsonRoute": "json/enemy/scorpion.json"
+}

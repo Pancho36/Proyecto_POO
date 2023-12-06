@@ -1,0 +1,7 @@
+{
+  "hp": 150,
+  "recompense" : 75,
+  "moveSpeed": 2.0,
+  "delay" : 1,
+  "imageRoute": "enemy/reaper.png"
+}

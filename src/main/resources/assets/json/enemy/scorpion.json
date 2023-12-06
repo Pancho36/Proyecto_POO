@@ -1,0 +1,7 @@
+{
+  "hp": 100,
+  "recompense" : 50,
+  "moveSpeed": 2.2,
+  "delay" : 1,
+  "imageRoute": "enemy/scorpion.png"
+}
