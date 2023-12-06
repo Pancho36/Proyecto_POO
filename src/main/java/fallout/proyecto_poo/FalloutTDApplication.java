@@ -6,8 +6,8 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
-import fallout.proyecto_poo.Exceptions.InvalidPositionException;
-import fallout.proyecto_poo.Exceptions.JsonNotFoundException;
+import fallout.proyecto_poo.exceptions.InvalidPositionException;
+import fallout.proyecto_poo.exceptions.JsonNotFoundException;
 import fallout.proyecto_poo.data.*;
 import fallout.proyecto_poo.ui.HP;
 import fallout.proyecto_poo.ui.StartRoundTimer;
@@ -158,7 +158,7 @@ public class FalloutTDApplication extends GameApplication implements Config {
     @Override
     protected void initInput() {
         FXGL.onBtnDown(MouseButton.PRIMARY,()->{
-            CheckValidPositon();
+            checkValidPositon();
             try {
                 if(!invalidPosition){
                     FXGL.spawn ("SimpleTurret",
@@ -177,7 +177,7 @@ public class FalloutTDApplication extends GameApplication implements Config {
         });
     }
 
-    private void CheckValidPositon() {
+    private void checkValidPositon() {
         // TODO: Cannot place turret on route
         mousePosition = FXGL.getInput().getMousePositionWorld();
         turretDataList  = getGameWorld().getEntitiesByType(EntityType.TURRET).stream().toList();
@@ -193,10 +193,12 @@ public class FalloutTDApplication extends GameApplication implements Config {
                     return FXGL.getAssetLoader().loadJSON("json/waves/" + name + ".json", WaveData.class).get();
                 }).toList();
     }
+
     private static void initMapAndFactory() {
         FXGL.getGameWorld().addEntityFactory(new FalloutFactory());
         FXGL.setLevelFromMap("tmx/fallout.tmx");
     }
+
     private void playerKilled() {
         showMessage("Defeat", getGameController()::gotoMainMenu);
     }

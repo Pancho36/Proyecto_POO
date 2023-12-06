@@ -42,7 +42,6 @@ public class EnemyComponent extends Component {
             if(!wayPoints.isEmpty()){
                 nextWayPoint = wayPoints.remove(0);
             }else {
-                // TODO: Agregar cuando enemigo llegue al final
                 entity.removeFromWorld();
                 FXGL.<FalloutTDApplication>getAppCast().onEnemyReachedEnd(entity);
             }

@@ -36,8 +36,8 @@ public class TurretComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         if(shootDelay.elapsed(Duration.seconds(0.2))){
-
-            FXGL.getGameWorld().getClosestEntity(entity,e ->e.isType(EntityType.ENEMY))
+            FXGL.getGameWorld()
+                    .getClosestEntity(entity,e ->e.isType(EntityType.ENEMY))
                     .ifPresent(closestEnemy -> {
                         shoot(closestEnemy);
                         shootDelay.capture();
