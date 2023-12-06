@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="57">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="79">
  <tileset firstgid="1" name="buildings-removebg-preview" tilewidth="32" tileheight="32" tilecount="220" columns="20">
   <image source="buildings-removebg-preview.png" width="669" height="373"/>
  </tileset>
@@ -79,8 +79,24 @@
   <object id="49" name="way1" type="WayPoint" x="831.988" y="639.167">
    <polyline points="-26,1 -28,-72.0102 -193.929,-254.581 -674.06,-257.361 -675.952,-360.881 -543.542,-507.931 -62.6003,-508.821 -63.0296,-591.962 -61.0295,-638.382"/>
   </object>
-  <object id="56" name="route" type="Route" x="894.667" y="642.667">
-   <polygon points="0,0 -1.33333,-165.333 -193.333,-353.333 -576,-352 -577.333,-417.333 -1.33333,-418.667 -1.33333,-637.333 -189.333,-641.333 -242.667,-581.333 -669.333,-578.667 -833.333,-418.667 -830.667,-193.333 -320,-192 -162.667,-32 -164,4"/>
-  </object>
+  <object id="58" type="Route" x="740" y="485" width="153" height="155"/>
+  <object id="59" type="Route" x="65" y="287" width="637" height="153"/>
+  <object id="60" type="Route" x="225" y="62" width="669" height="160"/>
+  <object id="61" type="Route" x="674" y="30" width="220" height="34"/>
+  <object id="62" type="Route" x="707" y="-4" width="186" height="35"/>
+  <object id="63" type="Route" x="193" y="95" width="124" height="191"/>
+  <object id="64" type="Route" x="65" y="222" width="132" height="63"/>
+  <object id="65" type="Route" x="160" y="125" width="34" height="96"/>
+  <object id="67" type="Route" x="129" y="161" width="29" height="57"/>
+  <object id="68" type="Route" x="97" y="191" width="29" height="28"/>
+  <object id="69" type="Route" x="571" y="442" width="294" height="38"/>
+  <object id="70" type="Route" x="701" y="323" width="36" height="115"/>
+  <object id="71" type="Route" x="739" y="349" width="29" height="91"/>
+  <object id="72" type="Route" x="768" y="382" width="33" height="54"/>
+  <object id="73" type="Route" x="799" y="412" width="32" height="30"/>
+  <object id="74" type="Route" x="609" y="481" width="127" height="33"/>
+  <object id="75" type="Route" x="638" y="510" width="102" height="35"/>
+  <object id="76" type="Route" x="670" y="544" width="70" height="34"/>
+  <object id="77" type="Route" x="703" y="575" width="38" height="30"/>
  </objectgroup>
 </map>

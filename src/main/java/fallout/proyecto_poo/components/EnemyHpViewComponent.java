@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public class EnemyHpViewComponent extends ChildViewComponent {
     private HealthIntComponent hp;
-    private ProgressBar hpBar;
+    private final ProgressBar hpBar;
 
     public EnemyHpViewComponent() {
         super(0, 64, false);

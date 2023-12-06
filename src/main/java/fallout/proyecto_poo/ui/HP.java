@@ -3,7 +3,7 @@ package fallout.proyecto_poo.ui;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.paint.Color;
 
-public class HP extends Icon {
+public class HP extends UiContainer {
     public HP() {
         super(100,60);
         var hpTexture = FXGL.texture("ui/heart.png").multiplyColor(Color.RED);

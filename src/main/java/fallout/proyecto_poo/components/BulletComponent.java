@@ -7,15 +7,12 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import fallout.proyecto_poo.EntityType;
 import fallout.proyecto_poo.FalloutTDApplication;
-import fallout.proyecto_poo.data.EnemyData;
-import fallout.proyecto_poo.data.TurretData;
 import javafx.geometry.Point2D;
-import javafx.util.Duration;
 
 public class BulletComponent extends Component {
 
-    private Entity turret;
-    private Entity target;
+    private final Entity turret;
+    private final Entity target;
 
     public BulletComponent(Entity turret, Entity target) {
         this.turret = turret;

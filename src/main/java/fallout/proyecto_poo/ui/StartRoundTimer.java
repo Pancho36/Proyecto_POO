@@ -3,7 +3,7 @@ package fallout.proyecto_poo.ui;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.paint.Color;
 
-public class StartRoundTimer extends Icon {
+public class StartRoundTimer extends UiContainer {
     public StartRoundTimer() {
         super(170,60);
         var text = FXGL.getUIFactoryService().newText("", Color.WHITE, 20.0);

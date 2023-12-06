@@ -4,8 +4,8 @@ import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Icon extends Parent {
-    public Icon(double x, double y) {
+public class UiContainer extends Parent {
+    public UiContainer(double x, double y) {
         var bg = new Rectangle(x, y, Color.color(0.5, 0.5, 0.5, 0.75));
         bg.setStroke(Color.color(0, 0, 0, 0.9));
         bg.setStrokeWidth(2.0);

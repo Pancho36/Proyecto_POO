@@ -1,7 +1,5 @@
 package fallout.proyecto_poo;
 
-import com.almasb.fxgl.core.View;
-import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.AutoRotationComponent;
 import com.almasb.fxgl.dsl.components.ExpireCleanComponent;
@@ -10,17 +8,12 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
-import com.almasb.fxgl.entity.components.TimeComponent;
-import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.HitBox;
-import com.almasb.fxgl.physics.PhysicsComponent;
 import fallout.proyecto_poo.components.BulletComponent;
 import fallout.proyecto_poo.components.EnemyComponent;
 import fallout.proyecto_poo.components.EnemyHpViewComponent;
 import fallout.proyecto_poo.components.TurretComponent;
 import fallout.proyecto_poo.data.EnemyData;
 import fallout.proyecto_poo.data.TurretData;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -42,7 +35,6 @@ public class FalloutFactory implements EntityFactory {
     public Entity route(SpawnData data){
         return FXGL.entityBuilder(data)
                 .type(EntityType.ROUTE)
-                .collidable()
                 .build();
     }
     @Spawns("Bullet")

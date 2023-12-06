@@ -11,13 +11,12 @@ import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.newLocalTimer;
 
 public class TurretComponent extends Component {
     private LocalTimer shootDelay;
-    private TurretData data;
+    private final TurretData data;
 
     public TurretComponent(TurretData data) {
         this.data = data;
@@ -40,8 +39,6 @@ public class TurretComponent extends Component {
 
             FXGL.getGameWorld().getClosestEntity(entity,e ->e.isType(EntityType.ENEMY))
                     .ifPresent(closestEnemy -> {
-                        // entity.rotateToVector(closestEnemy.getPosition().subtract(entity.getPosition()));
-
                         shoot(closestEnemy);
                         shootDelay.capture();
                     });

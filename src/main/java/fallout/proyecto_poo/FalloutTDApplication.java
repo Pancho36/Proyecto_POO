@@ -6,13 +6,11 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import fallout.proyecto_poo.Exceptions.InvalidPositionException;
+import fallout.proyecto_poo.Exceptions.JsonNotFoundException;
 import fallout.proyecto_poo.data.*;
 import fallout.proyecto_poo.ui.HP;
 import fallout.proyecto_poo.ui.StartRoundTimer;
-import javafx.beans.InvalidationListener;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Polyline;
@@ -22,11 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGL.geti;
 
-public class FalloutTDApplication extends GameApplication {
-    private List<WaveData> wavesData;
-    private StartRoundTimer startRoundTimer;
+public class FalloutTDApplication extends GameApplication implements Config {
+
     /* TODO:
      * 3. torreta no se pueda colocar en el camino
      * 4. torreta no se pueda colocar en otra torreta
@@ -36,7 +32,12 @@ public class FalloutTDApplication extends GameApplication {
      * 13. Oro
      * 14. Nivel de dificultad
      */
-
+    private List<WaveData> wavesData;
+    private StartRoundTimer startRoundTimer;
+    private List<Entity> route;
+    private boolean invalidPosition = false;
+    private Point2D mousePosition ;
+    private  List<Entity> turretDataList;
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setTitle("Fallout Tower Defense");
@@ -48,11 +49,11 @@ public class FalloutTDApplication extends GameApplication {
 
     @Override
     protected void initGameVars(Map<String, Object> vars) {
-        vars.put("numOfEnemies", 0);
+        vars.put("numOfEnemies",0 );
         vars.put("currentWave", 0);
-        vars.put("playerHp", Config.PLAYER_HP);
+        vars.put("playerHp", PLAYER_HP);
         vars.put("numOfWaves", 0);
-        vars.put("startRoundTimer", Config.TIME_TO_START);
+        vars.put("startRoundTimer", TIME_TO_START);
     }
 
     @Override
@@ -61,6 +62,7 @@ public class FalloutTDApplication extends GameApplication {
         initVarListeners();
         initWaveList();
         startRoundTimer = new StartRoundTimer();
+        mousePosition = FXGL.getInput().getMousePositionWorld();
         loadCurrentLevel();
     }
 
@@ -88,13 +90,9 @@ public class FalloutTDApplication extends GameApplication {
         FXGL.set("numOfEnemies",wavesData.get(geti("currentWave")).numOfEnemies());
 
 
-        FXGL.run(()->{
-            inc("startRoundTimer",-1);
-        },Duration.seconds(1),Config.TIME_TO_START);
+        FXGL.run(()-> inc("startRoundTimer",-1),Duration.seconds(1),TIME_TO_START);
 
-        FXGL.getGameTimer().runAtInterval(() -> {
-            spawnEnemies(wavesData.get(geti("currentWave")));
-        }, Duration.seconds(Config.TIME_TO_START), wavesData.get(geti("currentWave")).waves()
+        FXGL.getGameTimer().runAtInterval(() -> spawnEnemies(wavesData.get(geti("currentWave"))), Duration.seconds(TIME_TO_START), wavesData.get(geti("currentWave")).waves()
         );
     }
 
@@ -111,7 +109,6 @@ public class FalloutTDApplication extends GameApplication {
         FXGL.addUINode(new HP(),5,5);
         FXGL.addUINode(startRoundTimer,380,280);
     }
-
     @Override
     protected void onUpdate(double tpf) {
         // TODO: contar cuantos enemigos quedan pero con una variable unica "EnemiesKilled", cuando llegue a 0 que llame a una funcion que cree enemigos, pero que no sea la inicial
@@ -128,7 +125,8 @@ public class FalloutTDApplication extends GameApplication {
     }
 
     private static void spawnEnemies(WaveData waveData) {
-        EnemyData enemyData = FXGL.getAssetLoader().loadJSON(waveData.enemyJsonRoute(),EnemyData.class).get();
+        EnemyData enemyData = getJsonData("scorpion");
+
         var wayEntityInMap =  FXGL.getGameWorld().getSingleton(EntityType.WAY);
         FXGL.run(()->{
             Polyline wayPoints = wayEntityInMap.getObject("polyline");
@@ -142,18 +140,52 @@ public class FalloutTDApplication extends GameApplication {
         },Duration.seconds(enemyData.delay()),waveData.numOfEnemies());
     }
 
+    public static EnemyData getJsonData(String jsonName) {
+        EnemyData enemyData;
+        try {
+            if(FXGL.getAssetLoader().loadJSON("json/enemy/"+jsonName+".json", EnemyData.class).isPresent()){
+                enemyData =  FXGL.getAssetLoader().loadJSON("json/enemy/scorpion.json", EnemyData.class).get();
+                return enemyData;
+            }else {
+                throw new JsonNotFoundException("Json not found");
+            }
+        } catch (JsonNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     protected void initInput() {
         FXGL.onBtnDown(MouseButton.PRIMARY,()->{
-            Point2D mousePosition = FXGL.getInput().getMousePositionWorld();
-            FXGL.spawn ("SimpleTurret",
-                    new SpawnData(mousePosition.subtract(new Point2D(50,50)))
-                            .put("turretData",
-                                    FXGL.getAssetLoader()
-                                            .loadJSON("json/turrets/simpleTurret.json",TurretData.class).get()));
+            CheckValidPositon();
+            try {
+                if(!invalidPosition){
+                    FXGL.spawn ("SimpleTurret",
+                            new SpawnData(mousePosition.subtract(new Point2D(50,50)))
+                                    .put("turretData",
+                                            FXGL.getAssetLoader()
+                                                    .loadJSON("json/turrets/simpleTurret.json",TurretData.class).get()));
+
+                }else{
+                    throw new InvalidPositionException("Invalid Position");
+                }
+            }catch (InvalidPositionException e){
+                System.out.println(e.getMessage());
+            }
 
         });
     }
+
+    private void CheckValidPositon() {
+        // TODO: Cannot place turret on route
+        mousePosition = FXGL.getInput().getMousePositionWorld();
+        turretDataList  = getGameWorld().getEntitiesByType(EntityType.TURRET).stream().toList();
+        for (Entity turretData : turretDataList){
+            invalidPosition = this.mousePosition.distance(turretData.getPosition()) < 130;
+        }
+    }
+
     private void initWaveList() {
         List<String> wavesNames = List.of("wave1", "wave2", "wave3");
         wavesData = wavesNames.stream()

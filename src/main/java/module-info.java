@@ -3,4 +3,5 @@ open module fallout.proyecto_poo {
     requires javafx.fxml;
 
     requires com.almasb.fxgl.all;
+    requires com.google.gson;
 }
